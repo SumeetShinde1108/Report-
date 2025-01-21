@@ -15,29 +15,31 @@ from reportlab.platypus.flowables import Spacer
 from reportlab.lib.styles import getSampleStyleSheet
 
 def header(canvas, doc):
-    """Draws the header on each page with a title, left-aligned text, and a logo on the right."""
+    """Draws the header on each page with a title, left-aligned text, and logos on both sides."""
     canvas.saveState()
     canvas.setFont("Helvetica", 10)
 
     # Centered header title
-    header_text = "FarmSetu"
+    header_text = "FarmSetu Technologies"
     text_width = canvas.stringWidth(header_text, "Helvetica", 10)
     
     # Draws centered text 0.7 cm below the top edge of the A4 page.
-    canvas.drawString((A4[0] - text_width) / 2, A4[1] - 0.7 * cm, header_text) 
+    canvas.drawString((A4[0] - text_width) / 2, A4[1] - 0.7 * cm, header_text)
 
-    # Left-aligned header text
-    left_header_text = "SPDS"
+    # Left-aligned logo
+    logo_path = "C:\\Users\\mypc\\Downloads\\Farmsetu-Logo-full.png"
+    logo = Image(logo_path, width=4 * cm, height=1.5 * cm)
     
-    # Draws left-aligned text 0.7 cm below the top edge and 1 cm from the left edge of the A4 page.
-    canvas.drawString(1 * cm, A4[1] - 0.7 * cm, left_header_text)
+    # Draws the logo image 1.6 cm below the top edge and 1 cm from the left edge of the A4 page.
+    logo.drawOn(canvas, 1 * cm, A4[1] - 1.6 * cm)
 
     # Right-aligned logo
-    logo_path = "" 
-    logo = Image(logo_path, width=2 * cm, height=1.5 * cm)
+    logo_path = "C:\\Users\\mypc\\Downloads\\Farmsetu.webp" 
+    logo = Image(logo_path, width=1.3 * cm, height=1.3 * cm)
     
-    # Draws the logo image 1.5 cm below the top edge and 3 cm from the right edge of the A4 page.
-    logo.drawOn(canvas, A4[0] - 3 * cm, A4[1] - 1.5 * cm)
+    # Draws the logo image 1.4 cm below the top edge and 3 cm from the right edge of the A4 page.
+    logo.drawOn(canvas, A4[0] - 3 * cm, A4[1] - 1.4 * cm)
+
     canvas.restoreState()
 
 def footer(canvas, doc):
