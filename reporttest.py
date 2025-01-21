@@ -14,6 +14,7 @@ from reportlab.platypus import (
 from reportlab.platypus.flowables import Spacer
 from reportlab.lib.styles import getSampleStyleSheet
 
+
 def header(canvas, doc):
     """Draws the header on each page with a title, left-aligned text, and logos on both sides."""
     canvas.saveState()
@@ -37,10 +38,11 @@ def header(canvas, doc):
     logo_path = "C:\\Users\\mypc\\Downloads\\Farmsetu.webp" 
     logo = Image(logo_path, width=1.3 * cm, height=1.3 * cm)
     
-    # Draws the logo image 1.4 cm below the top edge and 3 cm from the right edge of the A4 page.
-    logo.drawOn(canvas, A4[0] - 3 * cm, A4[1] - 1.4 * cm)
+    # Draws the logo image 1.4 cm below the top edge and 1.7 cm from the right edge of the A4 page.
+    logo.drawOn(canvas, A4[0] - 1.7 * cm, A4[1] - 1.4 * cm)
 
     canvas.restoreState()
+
 
 def footer(canvas, doc):
     """Draws the footer on each page with a title, left-aligned text, and the page number."""
