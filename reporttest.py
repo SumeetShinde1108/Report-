@@ -77,6 +77,17 @@ def watermark(canvas, doc):
     canvas.setFont("Helvetica-Bold", 25)  
     canvas.setFillColor(Color(0.5, 0.5, 0.5, alpha=0.3))  # Semi-transparent gray
 
+    #for single watermark 
+    """
+    canvas.translate(A4[0] / 2, A4[1] / 2)
+    canvas.rotate(45)
+    text_width = canvas.stringWidth("CONFIDENTIAL", "Helvetica-Bold", 50)
+    canvas.drawString(-text_width / 2, 0, "CONFIDENTIAL")
+
+    canvas.restoreState()
+    """
+
+    # for multiple watermarks 
     # Define the watermark text and spacing
     watermark_text = "FARMSETU"
     text_width = canvas.stringWidth(watermark_text, "Helvetica-Bold", 25)
