@@ -1,16 +1,17 @@
 from reportlab.lib import colors
 from reportlab.lib.units import cm
-from reportlab.platypus import Image
 from reportlab.lib.pagesizes import A4
 from reportlab.platypus import (
     BaseDocTemplate, 
     PageTemplate, 
     Frame, 
     Table, 
-    TableStyle, 
+    TableStyle,
+    Image, 
     Paragraph, 
     PageBreak
 )
+from reportlab.lib.colors import Color 
 from reportlab.platypus.flowables import Spacer
 from reportlab.lib.styles import getSampleStyleSheet
 
@@ -70,10 +71,42 @@ def footer(canvas, doc):
     canvas.restoreState()
 
 
+def watermark(canvas, doc):
+    """Adds a visually appealing watermark to each page."""
+    canvas.saveState()
+    canvas.setFont("Helvetica-Bold", 25)  
+    canvas.setFillColor(Color(0.5, 0.5, 0.5, alpha=0.3))  # Semi-transparent gray
+
+    # Define the watermark text and spacing
+    watermark_text = "FARMSETU"
+    text_width = canvas.stringWidth(watermark_text, "Helvetica-Bold", 25)
+    text_height = 25  # Font size used as approximate text height
+
+    # Define spacing between watermarks
+    horizontal_spacing = 200  # Spacing between watermarks horizontally
+    vertical_spacing = 150    # Spacing between watermarks vertically
+
+    # Offset to start grid from center of the page
+    x_offset = (A4[0] % horizontal_spacing) / 2  # Center the grid horizontally
+    y_offset = (A4[1] % vertical_spacing) / 2   # Center the grid vertically
+
+    # Loop through the page to add watermarks
+    for y in range(-vertical_spacing, int(A4[1]) + vertical_spacing):
+        for x in range(-horizontal_spacing, int(A4[0]) + horizontal_spacing):
+            canvas.saveState()
+            canvas.translate(x + x_offset, y + y_offset)  # Center starting position
+            canvas.rotate(45)  # Rotate the text at an angle of 45 degrees
+            canvas.drawString(-text_width / 2, -text_height / 2, watermark_text)  # Center each watermark
+            canvas.restoreState()
+
+    canvas.restoreState()
+
+
 def add_page_decorations(canvas, doc):
     """Adds the header and footer to each page."""
     header(canvas, doc)
     footer(canvas, doc)
+    watermark(canvas, doc)
 
 
 def Smart_Path_Delivery_report_pdf():
@@ -144,7 +177,7 @@ def Smart_Path_Delivery_report_pdf():
         ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),  # Header text color
         ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),   # Font for entire table
         ('FONTSIZE', (0, 0), (-1, -1), 10),            # Font size
-        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),         # Center alignment
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),         # Center alignm=ent
         ('GRID', (0, 0), (-1, -1), 1, colors.black),   # Gridlines
     ])
     table.setStyle(style)
